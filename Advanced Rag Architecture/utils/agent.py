@@ -1,7 +1,8 @@
 from langchain_classic.agents import AgentExecutor, create_tool_calling_agent
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_classic.tools.retriever import create_retriever_tool
-from langchain_community.tools import DuckDuckGoSearchRun
+from langchain_community.tools import DuckDuckGoSearchResults
+from langchain_community.utilities import DuckDuckGoSearchAPIWrapper
 
 def create_rag_agent(llm, retriever):
     # Create a Tool out of our massive advanced retriever pipeline
@@ -11,8 +12,9 @@ def create_rag_agent(llm, retriever):
         "Search for information about the user's document. Always use this tool if you need factual information."
     )
     
-    # Add a Web Search Tool
-    web_search = DuckDuckGoSearchRun()
+    # Add a Web Search Tool and RESTRICT its output size to avoid hitting Groq Token limits!
+    wrapper = DuckDuckGoSearchAPIWrapper(max_results=2)
+    web_search = DuckDuckGoSearchResults(api_wrapper=wrapper)
     web_search.name = "web_search"
     web_search.description = "Search the internet for current events, news, or factual information that is NOT in the knowledge base."
     
