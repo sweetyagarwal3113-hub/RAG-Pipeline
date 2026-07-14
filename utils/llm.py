@@ -3,7 +3,7 @@ from config import HF_TOKEN
 
 def load_llm():
     llm = HuggingFaceEndpoint(
-        repo_id="mistralai/Mistral-7B-Instruct-v0.2",
+        repo_id="HuggingFaceH4/zephyr-7b-beta",
         temperature=0.1,
         huggingfacehub_api_token=HF_TOKEN
     )
