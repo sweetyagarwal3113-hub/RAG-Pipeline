@@ -22,7 +22,7 @@ def create_rag_agent(llm, retriever):
 
     # Create the agent prompt
     prompt = ChatPromptTemplate.from_messages([
-        ("system", "You are a helpful AI assistant. You have access to a knowledge base tool and a web search tool. Today's date is July 2026. You MUST use the web search tool to find answers for any current events or factual questions that you do not confidently know. NEVER refuse to answer without searching the web first!"),
+        ("system", "You are a helpful AI assistant. You have access to a knowledge base tool and a web search tool. Today's date is July 2026. You MUST use the web search tool to find answers for any current events or factual questions that you do not confidently know. NEVER refuse to answer without searching the web first! ONCE YOU HAVE FOUND THE ANSWER, STOP SEARCHING AND OUTPUT YOUR FINAL ANSWER IMMEDIATELY."),
         ("placeholder", "{chat_history}"),
         ("human", "{input}"),
         ("placeholder", "{agent_scratchpad}"),
@@ -32,5 +32,11 @@ def create_rag_agent(llm, retriever):
     agent = create_tool_calling_agent(llm, tools, prompt)
     
     # Create the executor
-    agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
+    agent_executor = AgentExecutor(
+        agent=agent, 
+        tools=tools, 
+        verbose=True, 
+        handle_parsing_errors=True,
+        max_iterations=5
+    )
     return agent_executor
