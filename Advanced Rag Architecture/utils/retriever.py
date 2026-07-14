@@ -21,7 +21,7 @@ def create_advanced_retriever(llm, parent_retriever, bm25_retriever):
 
     # 3. RE-RANKING: Compress/Re-rank the final results
     # We use FlashRank (a fast, lightweight local Cross-Encoder)
-    compressor = FlashrankRerank(top_n=3)
+    compressor = FlashrankRerank(top_n=2)
     compression_retriever = ContextualCompressionRetriever(
         base_compressor=compressor,
         base_retriever=multi_query_retriever
