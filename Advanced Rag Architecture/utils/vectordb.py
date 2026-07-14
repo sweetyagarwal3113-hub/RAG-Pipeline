@@ -10,8 +10,8 @@ def setup_parent_document_retriever(documents, embedding, persist_directory):
     # The parent document retriever stores the original large chunks (parents)
     # in an InMemoryStore, and the smaller chunks (children) in ChromaDB
     
-    # We will use large chunks for the parents
-    parent_splitter = RecursiveCharacterTextSplitter(chunk_size=2000, chunk_overlap=200)
+    # We will use large chunks for the parents (reduced to save tokens on Groq)
+    parent_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
     # And small chunks for the children to get highly specific vector matches
     child_splitter = RecursiveCharacterTextSplitter(chunk_size=400, chunk_overlap=50)
 

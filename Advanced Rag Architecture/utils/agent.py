@@ -1,6 +1,7 @@
 from langchain_classic.agents import AgentExecutor, create_tool_calling_agent
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_classic.tools.retriever import create_retriever_tool
+from langchain_community.tools import DuckDuckGoSearchRun
 
 def create_rag_agent(llm, retriever):
     # Create a Tool out of our massive advanced retriever pipeline
@@ -9,11 +10,17 @@ def create_rag_agent(llm, retriever):
         "knowledge_base_search",
         "Search for information about the user's document. Always use this tool if you need factual information."
     )
-    tools = [retriever_tool]
+    
+    # Add a Web Search Tool
+    web_search = DuckDuckGoSearchRun()
+    web_search.name = "web_search"
+    web_search.description = "Search the internet for current events, news, or factual information that is NOT in the knowledge base."
+    
+    tools = [retriever_tool, web_search]
 
     # Create the agent prompt
     prompt = ChatPromptTemplate.from_messages([
-        ("system", "You are a helpful AI assistant. You have access to a knowledge base tool. Use it whenever you need to answer questions about the document."),
+        ("system", "You are a helpful AI assistant. You have access to a knowledge base tool and a web search tool. Use the knowledge base for document queries, and web search for current events."),
         ("placeholder", "{chat_history}"),
         ("human", "{input}"),
         ("placeholder", "{agent_scratchpad}"),
