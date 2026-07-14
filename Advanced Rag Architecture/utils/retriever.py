@@ -1,6 +1,5 @@
 from langchain_classic.retrievers import EnsembleRetriever, MultiQueryRetriever, ContextualCompressionRetriever
 from langchain_classic.retrievers.document_compressors import FlashrankRerank
-from langchain.chains.query_constructor.base import AttributeInfo
 import logging
 
 logging.getLogger("langchain.retrievers.multi_query").setLevel(logging.INFO)

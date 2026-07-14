@@ -1,6 +1,6 @@
-from langchain.agents import AgentExecutor, create_tool_calling_agent
+from langchain_classic.agents import AgentExecutor, create_tool_calling_agent
 from langchain_core.prompts import ChatPromptTemplate
-from langchain.tools.retriever import create_retriever_tool
+from langchain_classic.tools.retriever import create_retriever_tool
 
 def create_rag_agent(llm, retriever):
     # Create a Tool out of our massive advanced retriever pipeline
