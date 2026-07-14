@@ -1,5 +1,5 @@
-from langchain.retrievers import EnsembleRetriever, MultiQueryRetriever, ContextualCompressionRetriever
-from langchain.retrievers.document_compressors import FlashrankRerank
+from langchain_classic.retrievers import EnsembleRetriever, MultiQueryRetriever, ContextualCompressionRetriever
+from langchain_classic.retrievers.document_compressors import FlashrankRerank
 from langchain.chains.query_constructor.base import AttributeInfo
 import logging
 
