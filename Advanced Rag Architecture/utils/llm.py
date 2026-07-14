@@ -1,12 +1,10 @@
-from langchain_google_genai import ChatGoogleGenerativeAI
-from config import GOOGLE_API_KEY
+from langchain_groq import ChatGroq
+from config import GROQ_API_KEY
 
 def load_llm():
-    # We use gemini-1.5-pro for advanced reasoning if possible, else 1.5-flash
-    # Since earlier 1.5 wasn't working due to the SDK, we use 3.5-flash
-    llm = ChatGoogleGenerativeAI(
-        model="gemini-3.5-flash",
-        api_key=GOOGLE_API_KEY,
+    llm = ChatGroq(
+        model="llama3-8b-8192",
+        api_key=GROQ_API_KEY,
         temperature=0
     )
     return llm
