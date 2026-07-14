@@ -38,7 +38,11 @@ def setup_parent_document_retriever(documents, embedding, persist_directory):
     return retriever, vectorstore
 
 def setup_bm25_retriever(documents):
+    # Split the documents into smaller chunks so BM25 doesn't return massive full pages
+    splitter = RecursiveCharacterTextSplitter(chunk_size=800, chunk_overlap=100)
+    split_docs = splitter.split_documents(documents)
+    
     # Initialize BM25 for sparse/keyword search
-    bm25_retriever = BM25Retriever.from_documents(documents)
-    bm25_retriever.k = 4
+    bm25_retriever = BM25Retriever.from_documents(split_docs)
+    bm25_retriever.k = 2
     return bm25_retriever
